@@ -35,8 +35,16 @@ export function LoginForm() {
         return;
       }
 
-      // Redirect to home on success
-      router.push("/");
+      // Check user role and redirect accordingly
+      const session = await fetch("/api/auth/session").then((res) => res.json());
+      const userRole = session?.user?.role;
+
+      // Redirect admin to admin dashboard, regular users to home
+      if (userRole === "ADMIN" || userRole === "SUPER_ADMIN") {
+        router.push("/admin");
+      } else {
+        router.push("/");
+      }
       router.refresh();
     } catch (error) {
       setError("Terjadi kesalahan. Silakan coba lagi.");

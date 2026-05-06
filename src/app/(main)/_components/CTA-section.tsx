@@ -37,7 +37,7 @@ export function CTASection() {
 
         {/* 3D Button with hover effect */}
         <Link
-          href="/about-us"
+          href="/login"
           className="ui-button group inline-flex items-center self-start"
         >
           <span className="inner relative overflow-hidden px-8 py-4 bg-black text-white font-sans text-sm uppercase tracking-widest">

@@ -117,7 +117,6 @@ export function MainFooter() {
       className="relative overflow-hidden p-4 md:p-6"
       style={{ backgroundColor: "#F8F4ED" }}
     >
-      {/* ── Container with border radius ─────────────────────────────── */}
       <div
         className="border overflow-hidden"
         style={{
@@ -233,7 +232,6 @@ export function MainFooter() {
         </p>
       </div>
 
-      {/* ── Wordmark raksasa ─────────────────────────────── */}
       <div className="bg-[#05D9FF] relative overflow-hidden" style={{ height: "clamp(120px, 22vw, 320px)" }}>
         <motion.div
           style={{ y: wordmarkY }}
@@ -241,7 +239,6 @@ export function MainFooter() {
         >
           {/* Container for both words */}
           <div className="relative flex items-end justify-center" style={{ width: "100%" }}>
-            {/* Karya - positioned based on phase */}
             <motion.span
               variants={karyaVariants}
               animate={phaseKey}
@@ -257,7 +254,6 @@ export function MainFooter() {
               Karya
             </motion.span>
             
-            {/* Kata. - positioned based on phase */}
             <motion.span
               variants={kataVariants}
               animate={phaseKey}
