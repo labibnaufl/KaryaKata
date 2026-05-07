@@ -1,3 +1,4 @@
+// Ini model untuk index
 'use client';
 
 import { SessionProvider } from 'next-auth/react';
