@@ -58,3 +58,16 @@ const KATEGORI = [
     warna: "#0e0e0e",
   },
 ];
+
+// ── Variants ────────────────────────────────────────────────────────────────
+const textVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.33, 1, 0.68, 1] as const } },
+  exit: { opacity: 0, y: -16, transition: { duration: 0.25, ease: [0.76, 0, 0.24, 1] as const } },
+};
+
+const imageVariants = {
+  hidden: { opacity: 0, scale: 1.04 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: [0.33, 1, 0.68, 1] as const } },
+  exit: { opacity: 0, scale: 0.97, transition: { duration: 0.35, ease: [0.76, 0, 0.24, 1] as const } },
+};
