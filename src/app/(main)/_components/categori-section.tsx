@@ -71,3 +71,141 @@ const imageVariants = {
   visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: [0.33, 1, 0.68, 1] as const } },
   exit: { opacity: 0, scale: 0.97, transition: { duration: 0.35, ease: [0.76, 0, 0.24, 1] as const } },
 };
+
+// ── Komponen Utama ──────────────────────────────────────────────────────────
+export function FeaturedSection() {
+  const [aktif, setAktif] = useState(0);
+  const kategoriAktif = KATEGORI[aktif];
+
+  return (
+    <section
+      className="w-full min-h-screen grid grid-cols-1 lg:grid-cols-2"
+      style={{ backgroundColor: "#F8F4ED" }}
+    >
+      {/* ── Kiri: Gambar ───────────────────────────────── */}
+      <div className="relative min-h-[50vw] lg:min-h-screen p-6 lg:p-10">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={aktif}
+            variants={imageVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="absolute inset-6 lg:inset-10 rounded-lg overflow-hidden"
+          >
+            <Image
+              src={kategoriAktif.image}
+              alt={kategoriAktif.label}
+              fill
+              className="object-cover"
+              priority
+            />
+            {/* overlay tipis agar teks di atasnya terbaca */}
+            <div className="absolute inset-0 bg-black/5" />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* ── Kanan: Navigasi + Konten ────────────────────── */}
+      <div className="flex flex-col px-8 md:px-12 lg:px-16 py-10 lg:py-14">
+
+        {/* Tab navigasi + nomor */}
+        <div className="flex items-start justify-between gap-4 mb-10 lg:mb-14">
+          <nav className="flex flex-wrap gap-x-5 gap-y-2">
+            {KATEGORI.map((kat, i) => (
+              <button
+                key={kat.slug}
+                onClick={() => setAktif(i)}
+                className="relative text-sm md:text-base font-sans transition-all duration-300"
+                style={{
+                  fontWeight: i === aktif ? 700 : 400,
+                  color: i === aktif ? "#0e0e0e" : "#0e0e0e60",
+                  letterSpacing: "0.01em",
+                }}
+              >
+                {kat.label}
+                {/* garis bawah aktif */}
+                {i === aktif && (
+                  <motion.span
+                    layoutId="tab-underline"
+                    className="absolute -bottom-1 left-0 right-0 h-[1.5px] bg-black"
+                  />
+                )}
+              </button>
+            ))}
+          </nav>
+
+          {/* Nomor */}
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={aktif}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3 }}
+              className="text-xl md:text-2xl font-bold font-sans shrink-0"
+              style={{ color: "#0e0e0e", letterSpacing: "-0.02em" }}
+            >
+              {kategoriAktif.nomor}
+            </motion.span>
+          </AnimatePresence>
+        </div>
+
+        {/* Deskripsi */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={aktif}
+            variants={textVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="flex-1 flex flex-col justify-between"
+          >
+            <p
+              className="font-sans leading-snug mb-10"
+              style={{
+                fontSize: "clamp(1.1rem, 1.8vw, 1.4rem)",
+                color: "#0e0e0e",
+                fontWeight: 400,
+                maxWidth: "38rem",
+              }}
+            >
+              {kategoriAktif.deskripsi}
+            </p>
+
+            {/* Tombol lihat artikel */}
+            <div>
+              <Link
+                href={`/kategori/${kategoriAktif.slug}`}
+                className="group inline-flex items-center gap-3 px-6 py-3 bg-black text-white font-sans font-semibold text-sm uppercase tracking-widest hover:bg-black/80 transition-colors duration-300"
+                style={{ borderRadius: "2px" }}
+              >
+                Lihat Artikel
+                <span className="transition-transform duration-300 group-hover:translate-x-1 inline-block">
+                  →
+                </span>
+              </Link>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Indikator garis bawah — mobile */}
+        <div className="flex gap-2 mt-10 lg:hidden">
+          {KATEGORI.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setAktif(i)}
+              className="h-[2px] transition-all duration-300"
+              style={{
+                flex: i === aktif ? 3 : 1,
+                backgroundColor: i === aktif ? "#0e0e0e" : "#0e0e0e30",
+              }}
+              aria-label={`Pilih kategori ${i + 1}`}
+            />
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+}
